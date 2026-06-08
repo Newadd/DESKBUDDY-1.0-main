@@ -1,0 +1,43 @@
+name: Build DeskBuddy
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Install Libraries
+        run: |
+          pio pkg install \
+          --library "Adafruit GFX Library" \
+          --library "Adafruit SH110X" \
+          --library "Arduino_JSON"
+
+      - name: Build Firmware
+        run: pio run
+
+      - name: Upload BIN Files
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeskBuddy-Firmware
+          path: |
+            .pio/build/*/*.bin
+            .pio/build/*/*.elf
