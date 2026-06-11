@@ -339,11 +339,10 @@ void handleTouch() {
     if (now - lastTapTime > DOUBLE_TAP_DELAY) {
       lastPageSwitch = now;
       if (tapCounter == 2) {
-        highBrightness = !highBrightness;
-        // Perbaikan: gunakan setContrast() bukan ssd1306_command()
-        display.setContrast(highBrightness ? 255 : 1);
-        display.display();
-      } else if (tapCounter == 1) {
+    highBrightness = !highBrightness;
+    display.contrast(highBrightness ? 255 : 1);
+    display.display();
+} else if (tapCounter == 1) {
         if (currentPage == 3) currentPage = 1;
         else if (currentPage == 4) currentPage = 2;
         else {
