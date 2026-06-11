@@ -340,7 +340,8 @@ void handleTouch() {
       lastPageSwitch = now;
       if (tapCounter == 2) {
     highBrightness = !highBrightness;
-    display.contrast(highBrightness ? 255 : 1);
+    display.ssd1306_command(SSD1306_SETCONTRAST);
+    display.ssd1306_command(highBrightness ? 255 : 1);
     display.display();
 } else if (tapCounter == 1) {
         if (currentPage == 3) currentPage = 1;
